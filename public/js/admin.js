@@ -193,7 +193,7 @@ let sessionsPaginationManager;
 let reservationsPaginationManager;
 let nutritionPaginationManager;
 
-async function loadMembers(page = 1, limit = 10) {
+async function loadMembers(page = 1, limit = 3) {
     const membersGrid = document.getElementById('membersGrid');
     membersGrid.innerHTML = '<div class="loading">Loading members...</div>';
     
@@ -205,14 +205,20 @@ async function loadMembers(page = 1, limit = 10) {
         
         if (response.ok) {
             const result = await response.json();
+            console.log('Members API response:', result);
             displayMembers(result.data || []);
             
             // Initialize or update pagination
             if (!membersPaginationManager) {
+                console.log('Creating new pagination manager');
                 membersPaginationManager = createPaginationManager('membersPagination', {
-                    onPageChange: (page, limit) => loadMembers(page, limit)
+                    onPageChange: (page, limit) => {
+                        console.log('Pagination page change:', page, limit);
+                        loadMembers(page, limit);
+                    }
                 });
             }
+            console.log('Updating pagination with:', result.pagination);
             membersPaginationManager.updatePagination(result.pagination);
         } else {
             console.error('API Error:', response.status, response.statusText);
