@@ -178,8 +178,32 @@ app.get('/debug', (req, res) => {
         port: PORT,
         host: req.get('host'),
         url: req.url,
-        method: req.method
+        method: req.method,
+        headers: req.headers
     });
+});
+
+// Additional health check routes for Railway
+app.get('/', (req, res) => {
+    res.status(200).json({
+        status: 'OK',
+        message: 'Gym Website API is running',
+        timestamp: new Date().toISOString(),
+        endpoints: {
+            health: '/health',
+            debug: '/debug',
+            ping: '/ping'
+        }
+    });
+});
+
+// Alternative health endpoints
+app.get('/status', (req, res) => {
+    res.status(200).send('OK');
+});
+
+app.get('/alive', (req, res) => {
+    res.status(200).send('ALIVE');
 });
 
 // Error handling middleware
@@ -224,6 +248,7 @@ function startServers() {
     });
     
     console.log(`🔄 Attempting to bind to port ${PORT}...`);
+    // Try binding to all interfaces and the specific port
     httpServer.listen(PORT, '0.0.0.0');
 
     // Only start HTTPS in development
@@ -289,7 +314,12 @@ console.log('🚀 Starting application...');
 console.log('📋 Environment variables:');
 console.log('  - NODE_ENV:', process.env.NODE_ENV);
 console.log('  - PORT:', process.env.PORT);
+console.log('  - RAILWAY_PUBLIC_DOMAIN:', process.env.RAILWAY_PUBLIC_DOMAIN);
+console.log('  - RAILWAY_PRIVATE_DOMAIN:', process.env.RAILWAY_PRIVATE_DOMAIN);
 console.log('  - MONGODB_URI:', process.env.MONGODB_URI ? 'Set' : 'Not set');
+console.log('📡 All available ports and addresses:');
+console.log('  - process.env.PORT:', process.env.PORT);
+console.log('  - Computed PORT constant:', PORT);
 
 // Start servers with error handling
 try {
