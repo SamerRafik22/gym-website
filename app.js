@@ -170,6 +170,18 @@ app.get('/ping', (req, res) => {
     res.status(200).send('pong');
 });
 
+// Debug route to check if server is responding
+app.get('/debug', (req, res) => {
+    res.status(200).json({
+        message: 'Server is running!',
+        timestamp: new Date().toISOString(),
+        port: PORT,
+        host: req.get('host'),
+        url: req.url,
+        method: req.method
+    });
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
@@ -190,23 +202,33 @@ app.use('*', (req, res) => {
 
 // Start servers
 function startServers() {
+    console.log('🔧 Setting up HTTP server...');
+    
     // Start HTTP server
     const httpServer = http.createServer(app);
     
     httpServer.on('error', (error) => {
         console.error('❌ HTTP Server Error:', error);
+        if (error.code === 'EADDRINUSE') {
+            console.error(`❌ Port ${PORT} is already in use`);
+        }
         process.exit(1);
     });
     
-    httpServer.listen(PORT, '0.0.0.0', () => {
-        console.log(`🚀 HTTP Server running on port ${PORT}`);
+    httpServer.on('listening', () => {
+        console.log(`🚀 HTTP Server successfully started!`);
+        console.log(`📍 Listening on: 0.0.0.0:${PORT}`);
         console.log(`📱 Environment: ${process.env.NODE_ENV || 'development'}`);
-        console.log(`🔓 HTTP URL: http://0.0.0.0:${PORT}`);
-        console.log(`✅ Health check available at: http://0.0.0.0:${PORT}/health`);
+        console.log(`✅ Health check: http://0.0.0.0:${PORT}/health`);
+        console.log(`🔍 Debug endpoint: http://0.0.0.0:${PORT}/debug`);
     });
+    
+    console.log(`🔄 Attempting to bind to port ${PORT}...`);
+    httpServer.listen(PORT, '0.0.0.0');
 
     // Only start HTTPS in development
     if (process.env.NODE_ENV !== 'production') {
+        console.log('🔒 Development mode: Setting up HTTPS...');
         try {
             const httpsOptions = {
                 key: process.env.SSL_KEY_PATH ? fs.readFileSync(process.env.SSL_KEY_PATH) : generateSelfSignedCert().key,
@@ -223,6 +245,8 @@ function startServers() {
             console.log(`⚠️  Could not start HTTPS server: ${error.message}`);
             console.log(`🔓 HTTP server is available at: http://0.0.0.0:${PORT}`);
         }
+    } else {
+        console.log('🔒 Production mode: HTTPS not configured (use reverse proxy)');
     }
 }
 
@@ -260,4 +284,17 @@ QIDAQAB
     }
 }
 
-startServers(); 
+// Add startup debugging
+console.log('🚀 Starting application...');
+console.log('📋 Environment variables:');
+console.log('  - NODE_ENV:', process.env.NODE_ENV);
+console.log('  - PORT:', process.env.PORT);
+console.log('  - MONGODB_URI:', process.env.MONGODB_URI ? 'Set' : 'Not set');
+
+// Start servers with error handling
+try {
+    startServers();
+} catch (error) {
+    console.error('❌ Error starting servers:', error);
+    process.exit(1);
+} 
