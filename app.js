@@ -165,10 +165,10 @@ app.use('*', (req, res) => {
 function startServers() {
     // Start HTTP server
     const httpServer = http.createServer(app);
-    httpServer.listen(PORT, () => {
+    httpServer.listen(PORT, '0.0.0.0', () => {
         console.log(`🚀 HTTP Server running on port ${PORT}`);
         console.log(`📱 Environment: ${process.env.NODE_ENV || 'development'}`);
-        console.log(`🔓 HTTP URL: http://localhost:${PORT}`);
+        console.log(`🔓 HTTP URL: http://0.0.0.0:${PORT}`);
     });
 
     // Try to start HTTPS server with self-signed certificate for development
