@@ -9,13 +9,22 @@ const protect = async (req, res, next) => {
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         token = req.headers.authorization.split(' ')[1];
     }
+    // Check for token in cookies (for browser requests)
+    else if (req.cookies && req.cookies.token) {
+        token = req.cookies.token;
+    }
 
     // Check if token exists
     if (!token) {
-        return res.status(401).json({
-            success: false,
-            message: 'Not authorized to access this route'
-        });
+        // For API requests, return JSON
+        if (req.path.startsWith('/api/') || req.headers.accept && req.headers.accept.includes('application/json')) {
+            return res.status(401).json({
+                success: false,
+                message: 'Not authorized to access this route'
+            });
+        }
+        // For browser requests, redirect to login
+        return res.redirect('/login');
     }
 
     try {

@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const cookieParser = require('cookie-parser');
 const path = require('path');
 const https = require('https');
 const http = require('http');
@@ -22,6 +23,10 @@ const sessionRoutes = require('./routes/sessions');
 const nutritionRoutes = require('./routes/nutrition');
 const contactRoutes = require('./routes/contact');
 const adminRoutes = require('./routes/admin');
+
+// Import middleware
+const { protect } = require('./middleware/auth');
+const { adminOnly } = require('./middleware/admin');
 
 // Security middleware
 app.use(helmet({
@@ -67,6 +72,7 @@ app.use(limiter);
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+app.use(cookieParser());
 
 // Set EJS as template engine
 app.set('view engine', 'ejs');
@@ -135,11 +141,11 @@ app.get('/login', (req, res) => {
     res.render('login');
 });
 
-app.get('/dashboard', (req, res) => {
+app.get('/dashboard', protect, (req, res) => {
     res.render('dashboard');
 });
 
-app.get('/admin', (req, res) => {
+app.get('/admin', protect, adminOnly, (req, res) => {
     res.render('admin');
 });
 
