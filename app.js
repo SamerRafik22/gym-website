@@ -30,7 +30,7 @@ app.use(helmet({
             defaultSrc: ["'self'"],
             styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
             fontSrc: ["'self'", "https://fonts.gstatic.com"],
-            scriptSrc: ["'self'"],
+            scriptSrc: ["'self'", "'unsafe-inline'"],
             objectSrc: ["'none'"],
             imgSrc: ["'self'", "data:", "https:"],
             connectSrc: ["'self'", "https://localhost:3443", "https://localhost:3000", "http://localhost:3000", "https://api.open-meteo.com"]
