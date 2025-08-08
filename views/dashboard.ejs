@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - RedefineLab</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+</head>
+<body class="dark-home">
+    <div id="global-header"></div>
+    
+    <main class="dashboard-main">
+        <!-- Welcome Section -->
+        <section class="dashboard-welcome">
+            <div class="container">
+                <div class="welcome-content">
+                    <h1>Welcome back, <span id="userName">Member</span>! 💪</h1>
+                    <p class="welcome-subtitle">Ready to crush your fitness goals today?</p>
+                </div>
+                <div class="welcome-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">🏋️</div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="workoutsThisMonth">12</span>
+                            <span class="stat-label">Workouts This Month</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🔥</div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="streakDays">7</span>
+                            <span class="stat-label">Day Streak</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="totalHours">24</span>
+                            <span class="stat-label">Total Hours</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Weather Widget -->
+        <section class="weather-section">
+            <div class="container">
+                <div id="weather-widget"></div>
+            </div>
+        </section>
+
+        <!-- Quick Actions -->
+        <section class="quick-actions">
+            <div class="container">
+                <h2>Quick Actions</h2>
+                <div class="actions-grid">
+                    <div class="action-card">
+                        <div class="action-icon">📅</div>
+                        <h3>Book a Session</h3>
+                        <p>Schedule your next workout or personal training session</p>
+                        <button class="action-btn">Book Now</button>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-icon">👥</div>
+                        <h3>Join a Class</h3>
+                        <p>Find and join group fitness classes</p>
+                        <button class="action-btn">Join Classes</button>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-icon">📊</div>
+                        <h3>Track Progress</h3>
+                        <p>View your fitness journey and achievements</p>
+                        <button class="action-btn">View Progress</button>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-icon">📅</div>
+                        <h3>My Schedule</h3>
+                        <p>View your upcoming sessions and bookings</p>
+                        <button class="action-btn">View Schedule</button>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-icon">🍎</div>
+                        <h3>Nutrition Plan</h3>
+                        <p>Access your personalized meal plans</p>
+                        <button class="action-btn" id="nutritionBtn">View Plan</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Membership Info -->
+        <section class="membership-info">
+            <div class="container">
+                <div class="membership-card">
+                    <div class="membership-header">
+                        <h2>Your Membership</h2>
+                        <div class="membership-badge" id="membershipType">Standard</div>
+                    </div>
+                    <div class="membership-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Membership ID:</span>
+                            <span class="detail-value" id="membershipId">Loading...</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Status:</span>
+                            <span class="detail-value status active" id="membershipStatus">Active</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Next Billing:</span>
+                            <span class="detail-value" id="nextBilling">Loading...</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Member Since:</span>
+                            <span class="detail-value" id="memberSince">Loading...</span>
+                        </div>
+                    </div>
+                    <div class="membership-benefits" id="membershipBenefits">
+                        <!-- Benefits will be loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Stats -->
+        <section class="quick-stats">
+            <div class="container">
+                <h2>Quick Stats</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-icon">🎯</div>
+                        <div class="stat-content">
+                            <span class="stat-number" id="totalSessions">0</span>
+                            <span class="stat-label">Total Sessions</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-content">
+                            <span class="stat-number" id="avgRating">4.8</span>
+                            <span class="stat-label">Avg Rating</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">🏆</div>
+                        <div class="stat-content">
+                            <span class="stat-number" id="achievements">3</span>
+                            <span class="stat-label">Achievements</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Activity -->
+        <section class="recent-activity">
+            <div class="container">
+                <h2>Recent Activity</h2>
+                <div class="activity-list" id="activityList">
+                    <div class="activity-item">
+                        <div class="activity-icon">🏃‍♂️</div>
+                        <div class="activity-content">
+                            <span class="activity-title">Cardio Session</span>
+                            <span class="activity-time">2 days ago</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">💪</div>
+                        <div class="activity-content">
+                            <span class="activity-title">Strength Training</span>
+                            <span class="activity-time">5 days ago</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">🧘‍♀️</div>
+                        <div class="activity-content">
+                            <span class="activity-title">Yoga Class</span>
+                            <span class="activity-time">1 week ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="global-footer"></div>
+    <script src="/js/script.js"></script>
+    <script src="/js/weather-api.js"></script>
+    <script src="/js/dashboard.js"></script>
+    
+    <script>
+        // Initialize Weather Widget
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize weather widget
+            window.weatherWidget = new WeatherWidget('weather-widget');
+            window.weatherWidget.init();
+        });
+    </script>
+</body>
+</html> 

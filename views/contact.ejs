@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - RedefineLab</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body class="dark-home" data-page="contact">
+    <div id="global-header"></div>
+    <main>
+        <!-- Contact Hero Section -->
+        <section class="contact-hero-section">
+            <div class="contact-hero-content">
+                <div class="contact-header">
+                    <h1>Contact Us</h1>
+                    <p class="hero-desc">Ready to start your fitness journey? Get in touch with us and we'll help you achieve your goals!</p>
+                    
+                    <!-- Response Time Indicator -->
+                    <div class="response-indicator">
+                        <div class="response-badge">
+                            <span class="response-time">⚡ Typically responds within 2 hours</span>
+                            <span class="response-guarantee">📞 24/7 support available</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <form class="contact-form modern-form" id="contactForm">
+                    <div class="form-header">
+                        <h3>Send us a Message</h3>
+                        <p>We'll get back to you within 24 hours</p>
+                        <div class="form-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                            <span class="progress-text">Complete the form below</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" required data-validate="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone *</label>
+                            <input type="tel" id="phone" name="phone" required data-validate="phone">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" data-validate="email">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="interest">I'm interested in:</label>
+                        <select id="interest" name="interest">
+                            <option value="">Select an option</option>
+                            <option value="membership">General Membership</option>
+                            <option value="personal-training">Personal Training</option>
+                            <option value="group-classes">Group Classes</option>
+                            <option value="nutrition">Nutrition Coaching</option>
+                            <option value="trial">Free Trial Session</option>
+                            <option value="corporate">Corporate Wellness</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Tell us about your goals</label>
+                        <textarea id="message" name="message" rows="4" placeholder="Share your fitness goals, experience level, or any questions you have..."></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="contact-submit-btn">
+                            <span>Send Message</span>
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Quick Contact Options -->
+                <div class="quick-contact">
+                    <h3>Prefer to talk directly?</h3>
+                    <div class="quick-options">
+                        <a href="https://wa.me/201285500002" class="quick-option whatsapp-btn" target="_blank">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.516z" fill="currentColor"/>
+                            </svg>
+                            <div>
+                                <span class="option-title">WhatsApp</span>
+                                <span class="option-desc">Chat instantly</span>
+                            </div>
+                        </a>
+                        
+                        <a href="tel:+201285500002" class="quick-option call-btn">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <div>
+                                <span class="option-title">Call Now</span>
+                                <span class="option-desc">Speak directly</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Information Panel -->
+            <div class="contact-info-panel modern-info">
+                <div class="info-header">
+                    <h2>Get in Touch</h2>
+                    <p>Visit us, call us, or connect online</p>
+                </div>
+
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <div class="method-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="method-content">
+                            <h3>Visit Our Gym</h3>
+                            <p>St Teseen<br>New Cairo, Egypt</p>
+                            <a href="https://maps.google.com/?q=St+Teseen+New+Cairo+Egypt" class="method-link" target="_blank">Get Directions</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="method-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="method-content">
+                            <h3>Call Us</h3>
+                            <p>01285500002</p>
+                            <a href="tel:01285500002" class="method-link">Call Now</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="method-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="method-content">
+                            <h3>Email Us</h3>
+                            <p>info@redefinelab.com</p>
+                            <a href="mailto:info@redefinelab.com" class="method-link">Send Email</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Map -->
+                <div class="location-map">
+                    <h3>Find Us</h3>
+                    <div class="map-container">
+                        <div class="map-placeholder">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            <p>Interactive Map</p>
+                            <button class="map-btn" onclick="openMap()">Open in Google Maps</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Operating Hours -->
+                <div class="operating-hours">
+                    <h3>Operating Hours</h3>
+                    <div class="hours-grid">
+                        <div class="hour-item">
+                            <span class="day">Monday - Friday</span>
+                            <span class="time">5:00 AM - 11:00 PM</span>
+                        </div>
+                        <div class="hour-item">
+                            <span class="day">Saturday</span>
+                            <span class="time">6:00 AM - 10:00 PM</span>
+                        </div>
+                        <div class="hour-item">
+                            <span class="day">Sunday</span>
+                            <span class="time">6:00 AM - 10:00 PM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Media -->
+                <div class="social-media">
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link" title="Facebook">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" title="Instagram">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2"/>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" stroke="currentColor" stroke-width="2"/>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" title="Twitter">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" title="YouTube">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <polygon points="9.75,15.02 15.5,11.75 9.75,8.48" fill="currentColor"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <div class="faq-container">
+                <div class="section-header">
+                    <h2>Frequently Asked Questions</h2>
+                    <div class="accent-line"></div>
+                    <p class="section-desc">Get quick answers to common questions</p>
+                </div>
+                
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <h3>What are your membership options?</h3>
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We offer flexible membership plans including monthly, quarterly, and annual options. All memberships include access to our full gym facilities, group classes, and basic nutritional guidance.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <h3>Do you offer personal training?</h3>
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes! Our certified personal trainers offer one-on-one sessions, customized workout plans, and specialized coaching for all fitness levels. Book a consultation to get started.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <h3>Can I try before joining?</h3>
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Absolutely! We offer a free trial session where you can experience our facilities, meet our trainers, and see if RedefineLab is the right fit for your fitness journey.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <h3>What safety measures do you have?</h3>
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We maintain high safety standards with regular equipment maintenance, certified staff, first aid availability, and comprehensive hygiene protocols to ensure a safe workout environment.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <h3>Do you have parking available?</h3>
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, we provide free parking for all members and visitors. Our facility includes ample parking space with easy access to the gym entrance.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <h3>What should I bring for my first visit?</h3>
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Just bring comfortable workout clothes, athletic shoes, a water bottle, and a positive attitude! We provide towels and all necessary equipment for your workout.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <div id="global-footer"></div>
+    <script src="/js/script.js"></script>
+</body>
+</html> 

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagination Test - RedefineLab</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+</head>
+<body class="dark-home">
+    <div id="global-header"></div>
+    
+    <main class="test-main">
+        <section class="test-hero-section">
+            <div class="container">
+                <div class="test-content">
+                    <h1>🧪 Pagination Test Page</h1>
+                    <p>Testing the new pagination functionality</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="test-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>📄 Sessions with Pagination</h2>
+                    <p>This demonstrates the pagination system working with the sessions API</p>
+                </div>
+                
+                <div class="sessions-list" id="sessionsList">
+                    <div class="loading">Loading sessions...</div>
+                </div>
+                
+                <div id="sessionsPagination"></div>
+            </div>
+        </section>
+
+        <section class="test-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>🔧 API Test Results</h2>
+                    <p>Testing various API endpoints with pagination</p>
+                </div>
+                
+                <div class="test-results" id="testResults">
+                    <div class="loading">Running tests...</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="global-footer"></div>
+    
+    <script src="/js/script.js"></script>
+    <script src="/js/pagination.js"></script>
+    <script>
+        // Test pagination functionality
+        let sessionsPaginationManager;
+
+        async function loadSessions(page = 1, limit = 5) {
+            const sessionsList = document.getElementById('sessionsList');
+            sessionsList.innerHTML = '<div class="loading">Loading sessions...</div>';
+            
+            try {
+                const response = await fetch(`/api/sessions?page=${page}&limit=${limit}`);
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    displaySessions(result.data.sessions || []);
+                    
+                    // Initialize or update pagination
+                    if (!sessionsPaginationManager) {
+                        sessionsPaginationManager = createPaginationManager('sessionsPagination', {
+                            onPageChange: (page, limit) => loadSessions(page, limit),
+                            itemsPerPage: limit
+                        });
+                    }
+                    sessionsPaginationManager.updatePagination(result.pagination);
+                } else {
+                    throw new Error('Failed to load sessions');
+                }
+            } catch (error) {
+                console.error('Error loading sessions:', error);
+                sessionsList.innerHTML = '<div class="error">Error loading sessions</div>';
+            }
+        }
+
+        function displaySessions(sessions) {
+            const sessionsList = document.getElementById('sessionsList');
+            
+            if (sessions.length === 0) {
+                sessionsList.innerHTML = '<div class="empty-state">No sessions found</div>';
+                return;
+            }
+            
+            const sessionsHTML = sessions.map(session => `
+                <div class="session-card">
+                    <div class="session-info">
+                        <h3>${session.name}</h3>
+                        <p class="session-meta">
+                            <span class="session-type">${session.type}</span>
+                            <span class="session-date">${new Date(session.date).toLocaleDateString()}</span>
+                            <span class="session-time">${session.time}</span>
+                        </p>
+                        <div class="session-capacity">
+                            <span>Capacity: ${session.currentBookings || 0}/${session.maxCapacity}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            sessionsList.innerHTML = sessionsHTML;
+        }
+
+        async function runAPITests() {
+            const testResults = document.getElementById('testResults');
+            let resultsHTML = '<div class="test-results-grid">';
+            
+            // Test 1: Sessions API with pagination
+            try {
+                const response = await fetch('/api/sessions?page=1&limit=3');
+                const result = await response.json();
+                
+                if (result.success && result.pagination) {
+                    resultsHTML += `
+                        <div class="test-result success">
+                            <h3>✅ Sessions API Pagination</h3>
+                            <p>Current Page: ${result.pagination.currentPage}</p>
+                            <p>Total Pages: ${result.pagination.totalPages}</p>
+                            <p>Total Items: ${result.pagination.totalItems}</p>
+                            <p>Items Per Page: ${result.pagination.itemsPerPage}</p>
+                            <p>Has Next Page: ${result.pagination.hasNextPage}</p>
+                            <p>Has Prev Page: ${result.pagination.hasPrevPage}</p>
+                        </div>
+                    `;
+                } else {
+                    resultsHTML += `
+                        <div class="test-result error">
+                            <h3>❌ Sessions API Pagination</h3>
+                            <p>Failed to get pagination data</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultsHTML += `
+                    <div class="test-result error">
+                        <h3>❌ Sessions API Pagination</h3>
+                        <p>Error: ${error.message}</p>
+                    </div>
+                `;
+            }
+            
+            // Test 2: Server status
+            try {
+                const response = await fetch('/api/test');
+                const result = await response.json();
+                
+                if (result.success) {
+                    resultsHTML += `
+                        <div class="test-result success">
+                            <h3>✅ Server Status</h3>
+                            <p>Server is running and responding</p>
+                            <p>Message: ${result.message}</p>
+                        </div>
+                    `;
+                } else {
+                    resultsHTML += `
+                        <div class="test-result error">
+                            <h3>❌ Server Status</h3>
+                            <p>Server responded with error</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultsHTML += `
+                    <div class="test-result error">
+                        <h3>❌ Server Status</h3>
+                        <p>Error: ${error.message}</p>
+                    </div>
+                `;
+            }
+            
+            resultsHTML += '</div>';
+            testResults.innerHTML = resultsHTML;
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSessions();
+            runAPITests();
+        });
+    </script>
+</body>
+</html> 

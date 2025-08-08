@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - RedefineLab</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+</head>
+<body class="dark-home">
+    <div id="global-header"></div>
+    
+    <main class="admin-main">
+        <!-- Admin Header -->
+        <section class="admin-header">
+            <div class="container">
+                <div class="admin-title">
+                    <div class="admin-header-content">
+                        <div class="admin-title-text">
+                            <h1>🛡️ Admin Dashboard</h1>
+                            <p>Manage your gym operations and members</p>
+                        </div>
+                        <div class="admin-header-actions">
+                            <button class="admin-action-btn danger" id="logoutBtn">
+                                🚪 Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-stats">
+                    <div class="admin-stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="totalMembers">0</span>
+                            <span class="stat-label">Total Members</span>
+                        </div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="monthlyRevenue">$0</span>
+                            <span class="stat-label">Monthly Revenue</span>
+                        </div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <div class="stat-icon">📅</div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="todaysSessions">0</span>
+                            <span class="stat-label">Today's Sessions</span>
+                        </div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="activeReservations">0</span>
+                            <span class="stat-label">Active Reservations</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Navigation Tabs -->
+        <section class="admin-tabs">
+            <div class="container">
+                <div class="tab-nav">
+                    <button class="tab-btn active" data-tab="users">👥 Members</button>
+                    <button class="tab-btn" data-tab="sessions">📅 Sessions</button>
+                    <button class="tab-btn" data-tab="reservations">🎫 Reservations</button>
+                    <button class="tab-btn" data-tab="nutrition">🍎 Nutrition Plans</button>
+                    <button class="tab-btn" data-tab="analytics">📊 Analytics</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Members Tab -->
+        <section class="tab-content active" id="users-tab">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Member Management</h2>
+                    <div class="section-actions">
+                        <button class="action-btn" id="refreshMembersBtn">🔄 Refresh</button>
+                        <input type="search" placeholder="Search members..." id="memberSearch" class="search-input">
+                    </div>
+                </div>
+                
+                <div class="members-grid" id="membersGrid">
+                    <div class="loading">Loading members...</div>
+                </div>
+                <div id="membersPagination"></div>
+            </div>
+        </section>
+
+        <!-- Sessions Tab -->
+        <section class="tab-content" id="sessions-tab">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Session Management</h2>
+                    <div class="section-actions">
+                        <button class="action-btn primary" id="createSessionBtn">➕ Create Session</button>
+                        <button class="action-btn" id="refreshSessionsBtn">🔄 Refresh</button>
+                    </div>
+                </div>
+                
+                <div class="sessions-list" id="sessionsList">
+                    <div class="loading">Loading sessions...</div>
+                </div>
+                <div id="sessionsPagination"></div>
+            </div>
+        </section>
+
+        <!-- Reservations Tab -->
+        <section class="tab-content" id="reservations-tab">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Reservation Management</h2>
+                    <div class="section-actions">
+                        <button class="action-btn" id="refreshReservationsBtn">🔄 Refresh</button>
+                        <select id="reservationFilter" class="filter-select">
+                            <option value="all">All Reservations</option>
+                            <option value="confirmed">Confirmed</option>
+                            <option value="pending">Pending</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="reservations-list" id="reservationsList">
+                    <div class="loading">Loading reservations...</div>
+                </div>
+                <div id="reservationsPagination"></div>
+            </div>
+        </section>
+
+        <!-- Nutrition Plans Tab -->
+        <section class="tab-content" id="nutrition-tab">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Nutrition Plan Management</h2>
+                    <div class="section-actions">
+                        <button class="action-btn primary" id="createNutritionBtn">➕ Create Plan</button>
+                        <button class="action-btn" id="refreshNutritionBtn">🔄 Refresh</button>
+                    </div>
+                </div>
+                
+                <div class="nutrition-plans-grid" id="nutritionPlansGrid">
+                    <div class="loading">Loading nutrition plans...</div>
+                </div>
+                <div id="nutritionPagination"></div>
+            </div>
+        </section>
+
+        <!-- Analytics Tab -->
+        <section class="tab-content" id="analytics-tab">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Analytics & Reports</h2>
+                    <div class="section-actions">
+                        <button class="action-btn" id="generateReportBtn">📋 Generate Report</button>
+                        <select id="analyticsFilter" class="filter-select">
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                            <option value="year">This Year</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h3>Membership Distribution</h3>
+                        <div class="chart-placeholder" id="membershipChart">
+                            <div class="membership-stats">
+                                <div class="membership-stat">
+                                    <span class="membership-type standard">Standard</span>
+                                    <span class="membership-count" id="standardCount">0</span>
+                                </div>
+                                <div class="membership-stat">
+                                    <span class="membership-type premium">Premium</span>
+                                    <span class="membership-count" id="premiumCount">0</span>
+                                </div>
+                                <div class="membership-stat">
+                                    <span class="membership-type elite">Elite</span>
+                                    <span class="membership-count" id="eliteCount">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="analytics-card">
+                        <h3>Revenue Trends</h3>
+                        <div class="chart-placeholder" id="revenueChart">
+                            <div class="revenue-stats">
+                                <div class="revenue-item">
+                                    <span class="revenue-label">This Month</span>
+                                    <span class="revenue-amount" id="thisMonthRevenue">$0</span>
+                                </div>
+                                <div class="revenue-item">
+                                    <span class="revenue-label">Last Month</span>
+                                    <span class="revenue-amount" id="lastMonthRevenue">$0</span>
+                                </div>
+                                <div class="revenue-item">
+                                    <span class="revenue-label">Growth</span>
+                                    <span class="revenue-growth" id="revenueGrowth">+0%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="analytics-card">
+                        <h3>Session Popularity</h3>
+                        <div class="chart-placeholder" id="sessionChart">
+                            <div class="session-stats">
+                                <div class="session-stat">
+                                    <span class="session-type">Group Classes</span>
+                                    <span class="session-count" id="groupClassCount">0</span>
+                                </div>
+                                <div class="session-stat">
+                                    <span class="session-type">Personal Training</span>
+                                    <span class="session-count" id="personalTrainingCount">0</span>
+                                </div>
+                                <div class="session-stat">
+                                    <span class="session-type">Private Coaching</span>
+                                    <span class="session-count" id="privateCoachingCount">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <div id="memberModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="memberModalTitle">Member Details</h3>
+                <button class="modal-close" id="closeMemberModalBtn">&times;</button>
+            </div>
+            <div class="modal-body" id="memberModalBody">
+                <!-- Member details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <div id="sessionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="sessionModalTitle">Create/Edit Session</h3>
+                <button class="modal-close" id="closeSessionModalBtn">&times;</button>
+            </div>
+            <div class="modal-body" id="sessionModalBody">
+                <!-- Session form will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <div id="nutritionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="nutritionModalTitle">Create/Edit Nutrition Plan</h3>
+                <button class="modal-close" id="closeNutritionModalBtn">&times;</button>
+            </div>
+            <div class="modal-body" id="nutritionModalBody">
+                <!-- Nutrition plan form will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <div id="global-footer"></div>
+    <script src="/js/script.js"></script>
+    <script src="/js/pagination.js"></script>
+    <script src="/js/admin.js"></script>
+</body>
+</html> 
