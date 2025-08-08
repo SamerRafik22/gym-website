@@ -143,6 +143,23 @@ app.get('/test', (req, res) => {
     res.render('test');
 });
 
+// Health check routes for Railway
+app.get('/health', (req, res) => {
+    res.status(200).json({ 
+        status: 'OK', 
+        timestamp: new Date().toISOString(),
+        port: PORT 
+    });
+});
+
+app.get('/healthz', (req, res) => {
+    res.status(200).send('OK');
+});
+
+app.get('/ping', (req, res) => {
+    res.status(200).send('pong');
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
