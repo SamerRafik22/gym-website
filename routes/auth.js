@@ -10,7 +10,9 @@ const {
     logout,
     checkUsername,
     checkEmail,
-    checkPhone
+    checkPhone,
+    forgotPassword,
+    resetPassword
 } = require('../controllers/authController');
 
 const router = express.Router();
@@ -140,6 +142,22 @@ const changePasswordValidation = [
         })
 ];
 
+const forgotPasswordValidation = [
+    body('email')
+        .isEmail()
+        .normalizeEmail()
+        .withMessage('Please enter a valid email address')
+];
+
+const resetPasswordValidation = [
+    body('password')
+        .isLength({ min: 6 })
+        .withMessage('Password must be at least 6 characters long'),
+    body('token')
+        .notEmpty()
+        .withMessage('Reset token is required')
+];
+
 // Routes
 router.post('/register', registerValidation, register);
 router.post('/login', loginValidation, login);
@@ -147,6 +165,8 @@ router.get('/me', protect, getMe);
 router.put('/profile', protect, updateProfileValidation, updateProfile);
 router.put('/change-password', protect, changePasswordValidation, changePassword);
 router.post('/logout', protect, logout);
+router.post('/forgot-password', forgotPasswordValidation, forgotPassword);
+router.post('/reset-password', resetPasswordValidation, resetPassword);
 
 // Validation routes for AJAX
 router.get('/check-username/:username', checkUsername);

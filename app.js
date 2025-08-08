@@ -160,6 +160,14 @@ app.get('/login', (req, res) => {
     res.render('login');
 });
 
+app.get('/forgot-password', (req, res) => {
+    res.render('forgot-password');
+});
+
+app.get('/reset-password', (req, res) => {
+    res.render('reset-password');
+});
+
 app.get('/dashboard', protect, (req, res) => {
     res.render('dashboard');
 });
