@@ -71,20 +71,28 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Database connection
+let dbConnected = false;
+
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/redefinelab', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
 .then(async () => {
     console.log('✅ Connected to MongoDB successfully');
+    dbConnected = true;
     
     // Create first admin user if none exists
-    const User = require('./models/User');
-    await User.createFirstAdmin();
+    try {
+        const User = require('./models/User');
+        await User.createFirstAdmin();
+    } catch (error) {
+        console.error('⚠️  Error creating admin user:', error.message);
+    }
 })
 .catch((err) => {
     console.error('❌ MongoDB connection error:', err);
-    process.exit(1);
+    console.log('⚠️  App will continue without database connection');
+    dbConnected = false;
 });
 
 // Test endpoint
@@ -148,7 +156,9 @@ app.get('/health', (req, res) => {
     res.status(200).json({ 
         status: 'OK', 
         timestamp: new Date().toISOString(),
-        port: PORT 
+        port: PORT,
+        database: dbConnected ? 'connected' : 'disconnected',
+        environment: process.env.NODE_ENV || 'development'
     });
 });
 
@@ -182,17 +192,22 @@ app.use('*', (req, res) => {
 function startServers() {
     // Start HTTP server
     const httpServer = http.createServer(app);
+    
+    httpServer.on('error', (error) => {
+        console.error('❌ HTTP Server Error:', error);
+        process.exit(1);
+    });
+    
     httpServer.listen(PORT, '0.0.0.0', () => {
         console.log(`🚀 HTTP Server running on port ${PORT}`);
         console.log(`📱 Environment: ${process.env.NODE_ENV || 'development'}`);
         console.log(`🔓 HTTP URL: http://0.0.0.0:${PORT}`);
+        console.log(`✅ Health check available at: http://0.0.0.0:${PORT}/health`);
     });
 
-    // Try to start HTTPS server with self-signed certificate for development
+    // Only start HTTPS in development
     if (process.env.NODE_ENV !== 'production') {
         try {
-            // For development, we'll create a simple HTTPS server
-            // In production, you should use proper SSL certificates
             const httpsOptions = {
                 key: process.env.SSL_KEY_PATH ? fs.readFileSync(process.env.SSL_KEY_PATH) : generateSelfSignedCert().key,
                 cert: process.env.SSL_CERT_PATH ? fs.readFileSync(process.env.SSL_CERT_PATH) : generateSelfSignedCert().cert
@@ -206,11 +221,8 @@ function startServers() {
             });
         } catch (error) {
             console.log(`⚠️  Could not start HTTPS server: ${error.message}`);
-            console.log(`🔓 HTTP server is available at: http://localhost:${PORT}`);
+            console.log(`🔓 HTTP server is available at: http://0.0.0.0:${PORT}`);
         }
-    } else {
-        // In production, you should configure proper SSL certificates
-        console.log(`🔒 For HTTPS in production, configure SSL_KEY_PATH and SSL_CERT_PATH environment variables`);
     }
 }
 
