@@ -87,8 +87,8 @@ async function processPayment() {
         
         // Determine the correct API URL
                         const apiUrl = window.location.protocol === 'file:'
-                    ? 'http://localhost:3000/auth/register'
-                    : '/auth/register';
+                    ? 'http://localhost:3000/api/auth/register'
+                    : '/api/auth/register';
         
         console.log('Using API URL:', apiUrl);
         console.log('Current protocol:', window.location.protocol);

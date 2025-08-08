@@ -82,19 +82,28 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Database connection
+let dbConnected = false;
+
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/redefinelab', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
 .then(async () => {
     console.log('✅ Connected to MongoDB successfully');
+    dbConnected = true;
     
     // Create first admin user if none exists
-    const User = require('./models/User');
-    await User.createFirstAdmin();
+    try {
+        const User = require('./models/User');
+        await User.createFirstAdmin();
+    } catch (error) {
+        console.error('⚠️  Error creating admin user:', error.message);
+    }
 })
 .catch((err) => {
     console.error('❌ MongoDB connection error:', err);
+    console.log('⚠️  App will continue without database connection');
+    dbConnected = false;
 });
 
 // Test endpoint
@@ -106,14 +115,24 @@ app.get('/api/test', (req, res) => {
     });
 });
 
-// Use routes
+// API Routes (keeping the /api prefix for backend functionality)
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/memberships', membershipRoutes);
+app.use('/api/contact', contactRoutes);
+app.use('/api/sessions', sessionRoutes);
+app.use('/api/reservations', reservationRoutes);
+app.use('/api/nutrition', nutritionRoutes);
+app.use('/api/admin', adminRoutes);
+
+// Additional route aliases without /api prefix for compatibility
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/memberships', membershipRoutes);
-app.use('/reservations', reservationRoutes);
-app.use('/sessions', sessionRoutes);
-app.use('/nutrition', nutritionRoutes);
 app.use('/contact', contactRoutes);
+app.use('/sessions', sessionRoutes);
+app.use('/reservations', reservationRoutes);
+app.use('/nutrition', nutritionRoutes);
 app.use('/admin', adminRoutes);
 
 // Serve main pages
@@ -151,6 +170,66 @@ app.get('/admin', protect, adminOnly, (req, res) => {
 
 app.get('/test', (req, res) => {
     res.render('test');
+});
+
+// HTML file aliases for compatibility
+app.get('/index.html', (req, res) => {
+    res.render('index');
+});
+
+app.get('/login.html', (req, res) => {
+    res.render('login');
+});
+
+app.get('/register.html', (req, res) => {
+    res.render('join');
+});
+
+app.get('/join.html', (req, res) => {
+    res.render('join');
+});
+
+app.get('/services.html', (req, res) => {
+    res.render('services');
+});
+
+app.get('/about.html', (req, res) => {
+    res.render('about');
+});
+
+app.get('/contact.html', (req, res) => {
+    res.render('contact');
+});
+
+app.get('/dashboard.html', protect, (req, res) => {
+    res.render('dashboard');
+});
+
+app.get('/admin.html', protect, adminOnly, (req, res) => {
+    res.render('admin');
+});
+
+app.get('/test.html', (req, res) => {
+    res.render('test');
+});
+
+// Health check routes
+app.get('/health', (req, res) => {
+    res.status(200).json({ 
+        status: 'OK', 
+        timestamp: new Date().toISOString(),
+        port: PORT,
+        database: dbConnected ? 'connected' : 'disconnected',
+        environment: process.env.NODE_ENV || 'development'
+    });
+});
+
+app.get('/healthz', (req, res) => {
+    res.status(200).send('OK');
+});
+
+app.get('/ping', (req, res) => {
+    res.status(200).send('pong');
 });
 
 // Error handling middleware

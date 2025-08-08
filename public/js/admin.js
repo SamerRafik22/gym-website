@@ -155,7 +155,7 @@ async function loadDashboardStats() {
         const token = localStorage.getItem('token');
         
         // Load dashboard statistics
-        const response = await fetch('/admin/stats', {
+        const response = await fetch('/api/admin/stats', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         
@@ -199,7 +199,7 @@ async function loadMembers(page = 1, limit = 10) {
     
     try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`/admin/users?page=${page}&limit=${limit}`, {
+        const response = await fetch(`/api/admin/users?page=${page}&limit=${limit}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         
@@ -329,7 +329,7 @@ async function loadSessions(page = 1, limit = 10) {
     
     try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`/admin/sessions?page=${page}&limit=${limit}`, {
+        const response = await fetch(`/api/admin/sessions?page=${page}&limit=${limit}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         
@@ -447,7 +447,7 @@ async function loadReservations(page = 1, limit = 10) {
     
     try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`/admin/reservations?page=${page}&limit=${limit}`, {
+        const response = await fetch(`/api/admin/reservations?page=${page}&limit=${limit}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         
@@ -547,7 +547,7 @@ async function loadNutritionPlans(page = 1, limit = 10) {
     
     try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`/admin/nutrition-plans?page=${page}&limit=${limit}`, {
+        const response = await fetch(`/api/admin/nutrition-plans?page=${page}&limit=${limit}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         
@@ -653,7 +653,7 @@ async function loadAnalytics() {
         const token = localStorage.getItem('token');
         
         // Load real analytics data from backend
-        const response = await fetch('/admin/stats', {
+        const response = await fetch('/api/admin/stats', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         
@@ -699,7 +699,7 @@ async function loadSessionStats() {
         const token = localStorage.getItem('token');
         
         // Get sessions data
-        const response = await fetch('/admin/sessions', {
+        const response = await fetch('/api/admin/sessions', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         
@@ -772,7 +772,7 @@ async function viewMember(memberId) {
         const token = localStorage.getItem('token');
         
         // Fetch member details from API
-        const response = await fetch(`/admin/users/${memberId}`, {
+        const response = await fetch(`/api/admin/users/${memberId}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         
@@ -859,7 +859,7 @@ async function editMember(memberId) {
     try {
         // First, get the member data
         const token = localStorage.getItem('token');
-        const response = await fetch(`/admin/users/${memberId}`, {
+        const response = await fetch(`/api/admin/users/${memberId}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         
@@ -932,7 +932,7 @@ async function editMember(memberId) {
             };
             
             try {
-                const updateResponse = await fetch(`/admin/users/${memberId}`, {
+                const updateResponse = await fetch(`/api/admin/users/${memberId}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -966,7 +966,7 @@ async function deleteMember(memberId) {
     if (confirm('Are you sure you want to delete this member? This action cannot be undone.')) {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`/admin/users/${memberId}`, {
+            const response = await fetch(`/api/admin/users/${memberId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -1057,7 +1057,7 @@ function createSession() {
         
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('/admin/sessions', {
+            const response = await fetch('/api/admin/sessions', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -1092,7 +1092,7 @@ async function editSession(sessionId) {
         const token = localStorage.getItem('token');
         
         // Fetch session details from API
-        const response = await fetch(`/admin/sessions/${sessionId}`, {
+        const response = await fetch(`/api/admin/sessions/${sessionId}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         
@@ -1216,7 +1216,7 @@ async function editSession(sessionId) {
                 };
                 
                 try {
-                    const updateResponse = await fetch(`/admin/sessions/${sessionId}`, {
+                    const updateResponse = await fetch(`/api/admin/sessions/${sessionId}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -1253,7 +1253,7 @@ async function deleteSession(sessionId) {
     if (confirm('Are you sure you want to delete this session? All related reservations will also be deleted.')) {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`/admin/sessions/${sessionId}`, {
+            const response = await fetch(`/api/admin/sessions/${sessionId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -1401,7 +1401,7 @@ function createNutritionPlan() {
             
             try {
                 const token = localStorage.getItem('token');
-                const response = await fetch('/admin/nutrition-plans', {
+                const response = await fetch('/api/admin/nutrition-plans', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1439,7 +1439,7 @@ async function loadMembersForNutrition() {
         const token = localStorage.getItem('token');
         console.log('Token:', token ? 'Present' : 'Missing');
         
-        const response = await fetch('/admin/members-for-nutrition', {
+        const response = await fetch('/api/admin/members-for-nutrition', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -1487,7 +1487,7 @@ async function loadMembersForNutrition() {
 async function refreshNutritionPlans() {
     try {
         const token = localStorage.getItem('token');
-        const response = await fetch('/admin/nutrition-plans', {
+        const response = await fetch('/api/admin/nutrition-plans', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -1554,7 +1554,7 @@ async function editNutritionPlan(planId) {
         const token = localStorage.getItem('token');
         
         // Fetch nutrition plan details from API
-        const response = await fetch(`/admin/nutrition-plans/${planId}`, {
+        const response = await fetch(`/api/admin/nutrition-plans/${planId}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         
@@ -1667,7 +1667,7 @@ async function editNutritionPlan(planId) {
                 };
                 
                 try {
-                    const updateResponse = await fetch(`/admin/nutrition-plans/${planId}`, {
+                    const updateResponse = await fetch(`/api/admin/nutrition-plans/${planId}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -1706,7 +1706,7 @@ async function viewNutritionPlanSchedule(planId) {
         const token = localStorage.getItem('token');
         
         // Fetch nutrition plan details from API
-        const response = await fetch(`/admin/nutrition-plans/${planId}`, {
+        const response = await fetch(`/api/admin/nutrition-plans/${planId}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         
@@ -1810,7 +1810,7 @@ async function deleteNutritionPlan(planId) {
     if (confirm('Are you sure you want to delete this nutrition plan?')) {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`/admin/nutrition-plans/${planId}`, {
+            const response = await fetch(`/api/admin/nutrition-plans/${planId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -1839,7 +1839,7 @@ function editSession(sessionId) {
 async function updateReservationStatus(reservationId, status) {
     try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`/admin/reservations/${reservationId}`, {
+        const response = await fetch(`/api/admin/reservations/${reservationId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
