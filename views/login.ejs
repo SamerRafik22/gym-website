@@ -236,8 +236,8 @@
             try {
                 // Determine the correct API URL
                 const apiUrl = window.location.protocol === 'file:' 
-                    ? 'http://localhost:3000/api/auth/login'
-                    : '/api/auth/login';
+                    ? 'http://localhost:3000/auth/login'
+                    : '/auth/login';
                 
                 console.log('Attempting login with:', data);
                 console.log('Using API URL:', apiUrl);

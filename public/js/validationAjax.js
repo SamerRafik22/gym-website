@@ -95,7 +95,7 @@ class FormValidator {
         }
 
         try {
-            const response = await fetch(`/api/auth/check-username/${encodeURIComponent(username.trim())}`);
+            const response = await fetch(`/auth/check-username/${encodeURIComponent(username.trim())}`);
             const data = await response.json();
 
             if (data.success) {
@@ -127,7 +127,7 @@ class FormValidator {
         }
 
         try {
-            const response = await fetch(`/api/auth/check-email/${encodeURIComponent(email.trim())}`);
+            const response = await fetch(`/auth/check-email/${encodeURIComponent(email.trim())}`);
             const data = await response.json();
 
             if (data.success) {
@@ -159,7 +159,7 @@ class FormValidator {
         }
 
         try {
-            const response = await fetch(`/api/auth/check-phone/${encodeURIComponent(phone.trim())}`);
+            const response = await fetch(`/auth/check-phone/${encodeURIComponent(phone.trim())}`);
             const data = await response.json();
 
             if (data.success) {

@@ -29,9 +29,9 @@ async function testServer() {
 
 async function testRegistration() {
     try {
-        const apiUrl = window.location.protocol === 'file:' 
-            ? 'http://localhost:3000/api/auth/register'
-            : '/api/auth/register';
+                        const apiUrl = window.location.protocol === 'file:'
+                    ? 'http://localhost:3000/auth/register'
+                    : '/auth/register';
         
         const testData = {
             name: 'Test User',
