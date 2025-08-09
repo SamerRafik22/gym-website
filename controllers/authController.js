@@ -254,6 +254,7 @@ const getMe = async (req, res) => {
                     fitnessGoals: user.fitnessGoals,
                     medicalConditions: user.medicalConditions,
                     emergencyContact: user.emergencyContact,
+                    profileImage: user.profileImage,
                     role: user.role,
                     lastLogin: user.lastLogin
                 }

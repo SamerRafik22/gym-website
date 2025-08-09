@@ -10,16 +10,50 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
     
-    // Load user data
+    // Load user data from localStorage first (fast initial load)
     loadUserData(user);
+    
+    // Then fetch fresh data from server (to get any updates including profile image)
+    refreshUserData();
     
     // Set up event listeners
     setupEventListeners();
 });
 
+// Function to refresh user data from server
+async function refreshUserData() {
+    try {
+        const response = await fetch('/api/auth/me', {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            const user = result.data.user;
+            
+            // Update localStorage with fresh data
+            localStorage.setItem('user', JSON.stringify(user));
+            
+            // Update the UI with fresh data (especially profile image)
+            loadUserData(user);
+        }
+    } catch (error) {
+        console.error('Error refreshing user data:', error);
+    }
+}
+
 function loadUserData(user) {
     // Update user name
     document.getElementById('userName').textContent = user.name || 'Member';
+    
+    // Update profile photo if it exists
+    const profilePhotoImg = document.getElementById('profilePhotoImg');
+    if (profilePhotoImg && user.profileImage) {
+        profilePhotoImg.src = user.profileImage;
+    }
     
     // Update membership info
     document.getElementById('membershipId').textContent = user.id || 'N/A';
