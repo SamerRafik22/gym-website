@@ -194,6 +194,7 @@
 .weather-section {
     padding: 2rem 0;
     background: rgba(255, 255, 255, 0.02);
+    margin-top: 3rem;
 }
 
 .weather-section .container {
@@ -9207,7 +9208,8 @@ body:not(.dark-home) .detail-item span:last-child {
     min-width: 300px;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    z-index: 100;
+    z-index: 1000;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .upload-area {
@@ -9354,6 +9356,11 @@ body:not(.dark-home) .detail-item span:last-child {
         position: static;
         margin-top: 1rem;
         min-width: auto;
+        left: auto;
+        right: auto;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
     }
     
     .profile-info {
@@ -9363,5 +9370,9 @@ body:not(.dark-home) .detail-item span:last-child {
     
     .current-photo {
         margin: 0 auto;
+    }
+    
+    .weather-section {
+        margin-top: 2rem;
     }
 }
