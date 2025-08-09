@@ -646,6 +646,54 @@ const resetPassword = async (req, res) => {
     }
 };
 
+// @desc    Upload profile photo
+// @route   POST /api/auth/upload-photo
+// @access  Private
+const uploadProfilePhoto = async (req, res) => {
+    try {
+        if (!req.processedFile) {
+            return res.status(400).json({
+                success: false,
+                message: 'No image file provided'
+            });
+        }
+
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found'
+            });
+        }
+
+        // Delete old profile image if it exists
+        const { deleteOldProfileImage } = require('../middleware/upload');
+        if (user.profileImage) {
+            deleteOldProfileImage(user.profileImage);
+        }
+
+        // Update user with new profile image path
+        user.profileImage = req.processedFile.path;
+        await user.save();
+
+        res.status(200).json({
+            success: true,
+            message: 'Profile photo updated successfully',
+            data: {
+                profileImage: user.profileImage
+            }
+        });
+
+    } catch (error) {
+        console.error('Upload profile photo error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to upload profile photo',
+            error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+        });
+    }
+};
+
 module.exports = {
     register,
     login,
@@ -657,5 +705,6 @@ module.exports = {
     checkEmail,
     checkPhone,
     forgotPassword,
-    resetPassword
+    resetPassword,
+    uploadProfilePhoto
 }; 

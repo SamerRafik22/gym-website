@@ -44,6 +44,67 @@
             </div>
         </section>
 
+        <!-- Profile Section -->
+        <section class="profile-section">
+            <div class="container">
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <h2>Your Profile</h2>
+                    </div>
+                    <div class="profile-content">
+                        <div class="profile-photo-section">
+                            <div class="current-photo">
+                                <img id="profilePhotoImg" src="/images/default-avatar.svg" alt="Profile Photo" class="profile-photo">
+                                <div class="photo-overlay">
+                                    <button id="changePhotoBtn" class="change-photo-btn">
+                                        <span class="camera-icon">📷</span>
+                                        Change Photo
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="photo-upload-form" id="photoUploadForm" style="display: none;">
+                                <form id="uploadForm" enctype="multipart/form-data">
+                                    <div class="upload-area">
+                                        <input type="file" id="profilePhotoInput" name="profilePhoto" accept="image/*" style="display: none;">
+                                        <div class="upload-placeholder" id="uploadPlaceholder">
+                                            <div class="upload-icon">📁</div>
+                                            <p>Click to select an image or drag and drop</p>
+                                            <small>JPG, PNG, GIF up to 5MB</small>
+                                        </div>
+                                        <div class="upload-preview" id="uploadPreview" style="display: none;">
+                                            <img id="previewImg" src="" alt="Preview">
+                                            <button type="button" id="removePreview" class="remove-preview">×</button>
+                                        </div>
+                                    </div>
+                                    <div class="upload-actions">
+                                        <button type="button" id="cancelUpload" class="btn btn-secondary">Cancel</button>
+                                        <button type="submit" id="uploadBtn" class="btn btn-primary" disabled>
+                                            <span class="btn-text">Upload Photo</span>
+                                            <span class="spinner" style="display: none;">⏳</span>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="profile-info">
+                            <div class="info-item">
+                                <span class="info-label">Name:</span>
+                                <span class="info-value" id="profileName">Loading...</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Email:</span>
+                                <span class="info-value" id="profileEmail">Loading...</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Member Since:</span>
+                                <span class="info-value" id="profileJoinDate">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Weather Widget -->
         <section class="weather-section">
             <div class="container">

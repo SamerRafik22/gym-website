@@ -705,6 +705,224 @@ async function cancelReservation(reservationId) {
     }
 }
 
+// Profile photo upload functionality
+function initializeProfilePhotoUpload() {
+    const changePhotoBtn = document.getElementById('changePhotoBtn');
+    const photoUploadForm = document.getElementById('photoUploadForm');
+    const profilePhotoInput = document.getElementById('profilePhotoInput');
+    const uploadForm = document.getElementById('uploadForm');
+    const cancelUpload = document.getElementById('cancelUpload');
+    const uploadArea = document.querySelector('.upload-area');
+    const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+    const uploadPreview = document.getElementById('uploadPreview');
+    const previewImg = document.getElementById('previewImg');
+    const removePreview = document.getElementById('removePreview');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const profilePhotoImg = document.getElementById('profilePhotoImg');
+    const profileNameSpan = document.getElementById('profileName');
+    const profileEmailSpan = document.getElementById('profileEmail');
+    const profileJoinDateSpan = document.getElementById('profileJoinDate');
+
+    // Load current user profile data
+    loadCurrentUserProfile();
+
+    // Show upload form when change photo button is clicked
+    if (changePhotoBtn) {
+        changePhotoBtn.addEventListener('click', function() {
+            photoUploadForm.style.display = 'block';
+        });
+    }
+
+    // Hide upload form when cancel is clicked
+    if (cancelUpload) {
+        cancelUpload.addEventListener('click', function() {
+            photoUploadForm.style.display = 'none';
+            resetUploadForm();
+        });
+    }
+
+    // Handle click on upload area
+    if (uploadArea) {
+        uploadArea.addEventListener('click', function(e) {
+            if (e.target !== removePreview) {
+                profilePhotoInput.click();
+            }
+        });
+    }
+
+    // Handle drag and drop
+    if (uploadArea) {
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#ff6b35';
+            uploadArea.style.background = 'rgba(255, 107, 53, 0.1)';
+        });
+
+        uploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            uploadArea.style.borderColor = 'rgba(255, 107, 53, 0.5)';
+            uploadArea.style.background = 'transparent';
+        });
+
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            uploadArea.style.borderColor = 'rgba(255, 107, 53, 0.5)';
+            uploadArea.style.background = 'transparent';
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileSelect(files[0]);
+            }
+        });
+    }
+
+    // Handle file selection
+    if (profilePhotoInput) {
+        profilePhotoInput.addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                handleFileSelect(e.target.files[0]);
+            }
+        });
+    }
+
+    // Remove preview
+    if (removePreview) {
+        removePreview.addEventListener('click', function() {
+            resetUploadForm();
+        });
+    }
+
+    // Handle form submission
+    if (uploadForm) {
+        uploadForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            await uploadProfilePhoto();
+        });
+    }
+
+    function handleFileSelect(file) {
+        // Validate file type
+        if (!file.type.startsWith('image/')) {
+            alert('Please select an image file');
+            return;
+        }
+
+        // Validate file size (5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            alert('File size must be less than 5MB');
+            return;
+        }
+
+        // Show preview
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            previewImg.src = e.target.result;
+            uploadPlaceholder.style.display = 'none';
+            uploadPreview.style.display = 'block';
+            uploadBtn.disabled = false;
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function resetUploadForm() {
+        profilePhotoInput.value = '';
+        uploadPlaceholder.style.display = 'block';
+        uploadPreview.style.display = 'none';
+        uploadBtn.disabled = true;
+        previewImg.src = '';
+    }
+
+    async function uploadProfilePhoto() {
+        const file = profilePhotoInput.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append('profilePhoto', file);
+
+        const btnText = uploadBtn.querySelector('.btn-text');
+        const spinner = uploadBtn.querySelector('.spinner');
+
+        try {
+            // Show loading state
+            btnText.style.display = 'none';
+            spinner.style.display = 'inline-block';
+            uploadBtn.disabled = true;
+
+            const response = await fetch('/api/auth/upload-photo', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                // Update profile photo
+                profilePhotoImg.src = result.data.profileImage + '?t=' + new Date().getTime();
+                photoUploadForm.style.display = 'none';
+                resetUploadForm();
+                
+                // Update user data in localStorage
+                const user = JSON.parse(localStorage.getItem('user') || '{}');
+                user.profileImage = result.data.profileImage;
+                localStorage.setItem('user', JSON.stringify(user));
+
+                alert('✅ Profile photo updated successfully!');
+            } else {
+                alert('❌ ' + (result.message || 'Failed to upload photo'));
+            }
+
+        } catch (error) {
+            console.error('Upload error:', error);
+            alert('❌ Error uploading photo. Please try again.');
+        } finally {
+            // Hide loading state
+            btnText.style.display = 'inline';
+            spinner.style.display = 'none';
+            uploadBtn.disabled = false;
+        }
+    }
+
+    async function loadCurrentUserProfile() {
+        try {
+            const response = await fetch('/api/auth/me', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                const user = result.data.user;
+                
+                // Update profile photo
+                if (user.profileImage) {
+                    profilePhotoImg.src = user.profileImage;
+                }
+                
+                // Update profile info
+                if (profileNameSpan) profileNameSpan.textContent = user.name || 'N/A';
+                if (profileEmailSpan) profileEmailSpan.textContent = user.email || 'N/A';
+                if (profileJoinDateSpan) {
+                    const joinDate = user.joinDate ? new Date(user.joinDate).toLocaleDateString() : new Date().toLocaleDateString();
+                    profileJoinDateSpan.textContent = joinDate;
+                }
+            }
+        } catch (error) {
+            console.error('Error loading profile:', error);
+        }
+    }
+}
+
+// Initialize profile photo upload when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Add a small delay to ensure all elements are loaded
+    setTimeout(initializeProfilePhotoUpload, 100);
+});
+
 // Make functions globally accessible
 window.loadUserNutritionPlan = loadUserNutritionPlan;
 window.closeNutritionModal = closeNutritionModal;

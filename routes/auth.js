@@ -1,6 +1,7 @@
 const express = require('express');
 const { body } = require('express-validator');
 const { protect } = require('../middleware/auth');
+const { upload, processProfileImage } = require('../middleware/upload');
 const {
     register,
     login,
@@ -12,7 +13,8 @@ const {
     checkEmail,
     checkPhone,
     forgotPassword,
-    resetPassword
+    resetPassword,
+    uploadProfilePhoto
 } = require('../controllers/authController');
 
 const router = express.Router();
@@ -167,6 +169,7 @@ router.put('/change-password', protect, changePasswordValidation, changePassword
 router.post('/logout', protect, logout);
 router.post('/forgot-password', forgotPasswordValidation, forgotPassword);
 router.post('/reset-password', resetPasswordValidation, resetPassword);
+router.post('/upload-photo', protect, upload.single('profilePhoto'), processProfileImage, uploadProfilePhoto);
 
 // Validation routes for AJAX
 router.get('/check-username/:username', checkUsername);
