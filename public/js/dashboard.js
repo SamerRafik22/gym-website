@@ -741,6 +741,24 @@ function initializeProfilePhotoUpload() {
         });
     }
 
+    // Hide upload form when clicking outside of it
+    if (photoUploadForm) {
+        photoUploadForm.addEventListener('click', function(e) {
+            if (e.target === photoUploadForm) {
+                photoUploadForm.style.display = 'none';
+                resetUploadForm();
+            }
+        });
+    }
+
+    // Hide upload form when pressing ESC key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && photoUploadForm && photoUploadForm.style.display === 'block') {
+            photoUploadForm.style.display = 'none';
+            resetUploadForm();
+        }
+    });
+
     // Handle click on upload area
     if (uploadArea) {
         uploadArea.addEventListener('click', function(e) {

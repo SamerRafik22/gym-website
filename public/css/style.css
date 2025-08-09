@@ -9199,17 +9199,30 @@ body:not(.dark-home) .detail-item span:last-child {
 }
 
 .photo-upload-form {
-    position: absolute;
-    top: 0;
-    left: 170px;
-    background: rgba(255, 255, 255, 0.1);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(20, 20, 22, 0.95);
     border-radius: 15px;
-    padding: 1.5rem;
-    min-width: 300px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    z-index: 1000;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    padding: 2rem;
+    min-width: 400px;
+    max-width: 500px;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 107, 53, 0.3);
+    z-index: 9999;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+}
+
+.photo-upload-form::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: -1;
 }
 
 .upload-area {
@@ -9353,14 +9366,9 @@ body:not(.dark-home) .detail-item span:last-child {
     }
     
     .photo-upload-form {
-        position: static;
-        margin-top: 1rem;
-        min-width: auto;
-        left: auto;
-        right: auto;
-        max-width: 400px;
-        margin-left: auto;
-        margin-right: auto;
+        min-width: 90vw;
+        max-width: 90vw;
+        padding: 1.5rem;
     }
     
     .profile-info {
