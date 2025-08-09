@@ -40,8 +40,8 @@ class EmailService {
                 },
                 to: userEmail,
                 subject: 'Reset Your RedefineLab Password',
-                html: this.generatePasswordResetHTML(resetUrl, userName),
-                text: this.generatePasswordResetText(resetUrl, userName)
+                html: this.generatePasswordResetHTML(resetUrl, userName, userEmail),
+                text: this.generatePasswordResetText(resetUrl, userName, userEmail)
             };
 
             const result = await this.transporter.sendMail(mailOptions);
@@ -54,7 +54,7 @@ class EmailService {
         }
     }
 
-    generatePasswordResetHTML(resetUrl, userName) {
+    generatePasswordResetHTML(resetUrl, userName, userEmail) {
         return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -179,7 +179,7 @@ class EmailService {
 </html>`;
     }
 
-    generatePasswordResetText(resetUrl, userName) {
+    generatePasswordResetText(resetUrl, userName, userEmail) {
         return `Reset Your RedefineLab Password
 
 Hi${userName ? ` ${userName}` : ''},
