@@ -132,7 +132,20 @@ HTTPS_PORT=3443
 # SSL Certificates (for HTTPS development)
 SSL_KEY_PATH=./ssl/server.key
 SSL_CERT_PATH=./ssl/server.cert
+
+# Email Configuration (for password reset and notifications)
+EMAIL_USERNAME=your-email@gmail.com
+EMAIL_PASSWORD=your-app-password-here
+
+# Frontend URL (for email links)
+FRONTEND_URL=http://localhost:3000
 ```
+
+### 📧 Email Setup for Gmail:
+1. Enable 2-Factor Authentication on your Gmail account
+2. Generate an "App Password" (not your regular password)
+3. Use your Gmail address as `EMAIL_USERNAME`
+4. Use the App Password as `EMAIL_PASSWORD`
 
 ### 4. Set Up SSL for HTTPS (Development)
 

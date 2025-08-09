@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
+const emailService = require('../utils/emailService');
 
 // Generate JWT Token
 const generateToken = (userId) => {
@@ -99,6 +100,14 @@ const register = async (req, res) => {
         // Update last login
         user.lastLogin = new Date();
         await user.save();
+
+        // Send welcome email (don't block registration if email fails)
+        try {
+            await emailService.sendWelcomeEmail(user.email, user.name);
+        } catch (emailError) {
+            console.error('Welcome email failed to send:', emailError);
+            // Continue with registration even if email fails
+        }
 
         res.status(201).json({
             success: true,
@@ -538,22 +547,29 @@ const forgotPassword = async (req, res) => {
         // Create reset URL
         const resetUrl = `${req.protocol}://${req.get('host')}/reset-password?token=${resetToken}`;
 
-        // For now, we'll just log the reset URL (in production, you'd send this via email)
-        console.log('Password reset URL:', resetUrl);
-
-        // TODO: Send email with reset link
-        // This is where you would integrate with an email service like:
-        // - Nodemailer with SMTP
-        // - SendGrid
-        // - AWS SES
-        // - Mailgun
-
-        res.status(200).json({
-            success: true,
-            message: 'Password reset link sent to your email',
-            // In development, include the reset URL for testing
-            ...(process.env.NODE_ENV === 'development' && { resetUrl })
-        });
+        // Send email with reset link
+        try {
+            await emailService.sendPasswordResetEmail(user.email, resetUrl, user.name);
+            
+            res.status(200).json({
+                success: true,
+                message: 'Password reset link sent to your email',
+                // In development, include the reset URL for testing
+                ...(process.env.NODE_ENV === 'development' && { resetUrl })
+            });
+        } catch (emailError) {
+            console.error('Email sending failed:', emailError);
+            
+            // Clear reset token fields if email fails
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExpire = undefined;
+            await user.save({ validateBeforeSave: false });
+            
+            return res.status(500).json({
+                success: false,
+                message: 'Email could not be sent. Please try again later.'
+            });
+        }
 
     } catch (error) {
         console.error('Forgot password error:', error);
