@@ -9,10 +9,10 @@ class EmailService {
     async setupTransporter() {
         try {
             // Create transporter using Gmail SMTP
-            this.transporter = nodemailer.createTransporter({
+            this.transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
-                    user: process.env.EMAIL_USERNAME || 'samer2203013@miuegypt.edu.eg',
+                    user: process.env.EMAIL_USERNAME || 'semsem.rafik@gmail.com',
                     pass: process.env.EMAIL_PASSWORD || 'whziccbfzjptadae'
                 }
             });
@@ -36,7 +36,7 @@ class EmailService {
             const mailOptions = {
                 from: {
                     name: 'RedefineLab Gym',
-                    address: process.env.EMAIL_USERNAME || 'samer2203013@miuegypt.edu.eg'
+                    address: process.env.EMAIL_USERNAME || 'semsem.rafik@gmail.com'
                 },
                 to: userEmail,
                 subject: 'Reset Your RedefineLab Password',
@@ -210,7 +210,7 @@ This email was sent to ${userEmail}.`;
             const mailOptions = {
                 from: {
                     name: 'RedefineLab Gym',
-                    address: process.env.EMAIL_USERNAME || 'samer2203013@miuegypt.edu.eg'
+                    address: process.env.EMAIL_USERNAME || 'semsem.rafik@gmail.com'
                 },
                 to: userEmail,
                 subject: 'Welcome to RedefineLab - Your Fitness Journey Starts Now!',
