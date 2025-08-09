@@ -10,8 +10,7 @@ const {
     getMembersForAssignment
 } = require('../controllers/nutritionController');
 
-const { protect } = require('../middleware/auth');
-const { adminOnly } = require('../middleware/admin');
+const { protect, adminOnly } = require('../utils/auth');
 
 const router = express.Router();
 

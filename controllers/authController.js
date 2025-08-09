@@ -668,7 +668,7 @@ const uploadProfilePhoto = async (req, res) => {
         }
 
         // Delete old profile image if it exists
-        const { deleteOldProfileImage } = require('../middleware/upload');
+        const { deleteOldProfileImage } = require('../utils/upload');
         if (user.profileImage) {
             deleteOldProfileImage(user.profileImage);
         }

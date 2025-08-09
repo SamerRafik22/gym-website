@@ -1,7 +1,6 @@
 const express = require('express');
 const { body } = require('express-validator');
-const { protect } = require('../middleware/auth');
-const { adminOnly } = require('../middleware/admin');
+const { protect, adminOnly } = require('../utils/auth');
 const {
     // User management
     getAllUsers,

@@ -193,7 +193,7 @@ let sessionsPaginationManager;
 let reservationsPaginationManager;
 let nutritionPaginationManager;
 
-async function loadMembers(page = 1, limit = 10) {
+async function loadMembers(page = 1, limit = 2) {
     const membersGrid = document.getElementById('membersGrid');
     membersGrid.innerHTML = '<div class="loading">Loading members...</div>';
     
@@ -314,16 +314,16 @@ function displaySimulatedMembers() {
         });
     }
     
-    // Set up pagination for simulated data (3 items, 1 page)
+    // Set up pagination for simulated data (3 items, 2 pages with limit=2)
     membersPaginationManager.updatePagination({
         currentPage: 1,
-        totalPages: 1,
+        totalPages: 2,
         totalItems: 3,
-        itemsPerPage: 10
+        itemsPerPage: 2
     });
 }
 
-async function loadSessions(page = 1, limit = 10) {
+async function loadSessions(page = 1, limit = 2) {
     const sessionsList = document.getElementById('sessionsList');
     sessionsList.innerHTML = '<div class="loading">Loading sessions...</div>';
     
@@ -432,16 +432,16 @@ function displaySimulatedSessions() {
         });
     }
     
-    // Set up pagination for simulated data (2 items, 1 page)
+    // Set up pagination for simulated data (2 items, 1 page with limit=2)
     sessionsPaginationManager.updatePagination({
         currentPage: 1,
         totalPages: 1,
         totalItems: 2,
-        itemsPerPage: 10
+        itemsPerPage: 2
     });
 }
 
-async function loadReservations(page = 1, limit = 10) {
+async function loadReservations(page = 1, limit = 2) {
     const reservationsList = document.getElementById('reservationsList');
     reservationsList.innerHTML = '<div class="loading">Loading reservations...</div>';
     
@@ -487,12 +487,12 @@ async function loadReservations(page = 1, limit = 10) {
             });
         }
         
-        // Set up pagination for simulated data (1 item, 1 page)
+        // Set up pagination for simulated data (1 item, 1 page with limit=2) 
         reservationsPaginationManager.updatePagination({
             currentPage: 1,
             totalPages: 1,
             totalItems: 1,
-            itemsPerPage: 10
+            itemsPerPage: 2
         });
     }
 }
@@ -541,7 +541,7 @@ function displayReservations(reservations) {
     });
 }
 
-async function loadNutritionPlans(page = 1, limit = 10) {
+async function loadNutritionPlans(page = 1, limit = 2) {
     const nutritionPlansGrid = document.getElementById('nutritionPlansGrid');
     nutritionPlansGrid.innerHTML = '<div class="loading">Loading nutrition plans...</div>';
     
@@ -594,12 +594,12 @@ async function loadNutritionPlans(page = 1, limit = 10) {
             });
         }
         
-        // Set up pagination for simulated data (2 items, 1 page)
+        // Set up pagination for simulated data (2 items, 1 page with limit=2)
         nutritionPaginationManager.updatePagination({
             currentPage: 1,
             totalPages: 1,
             totalItems: 2,
-            itemsPerPage: 10
+            itemsPerPage: 2
         });
     }
 }

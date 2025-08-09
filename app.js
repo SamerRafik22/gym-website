@@ -25,8 +25,7 @@ const contactRoutes = require('./routes/contact');
 const adminRoutes = require('./routes/admin');
 
 // Import middleware
-const { protect } = require('./middleware/auth');
-const { adminOnly } = require('./middleware/admin');
+const { protect, adminOnly } = require('./utils/auth');
 
 // Security middleware
 app.use(helmet({
@@ -277,6 +276,7 @@ function startServers() {
                 key: process.env.SSL_KEY_PATH ? fs.readFileSync(process.env.SSL_KEY_PATH) : generateSelfSignedCert().key,
                 cert: process.env.SSL_CERT_PATH ? fs.readFileSync(process.env.SSL_CERT_PATH) : generateSelfSignedCert().cert
             };
+
             
             const httpsServer = https.createServer(httpsOptions, app);
             httpsServer.listen(HTTPS_PORT, () => {

@@ -11,7 +11,7 @@ const {
     getUpcomingSessions
 } = require('../controllers/sessionController');
 
-const { protect, authorize } = require('../middleware/auth');
+const { protect, authorize } = require('../utils/auth');
 
 const router = express.Router();
 

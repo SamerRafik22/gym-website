@@ -1,7 +1,7 @@
 const express = require('express');
 const { body } = require('express-validator');
-const { protect } = require('../middleware/auth');
-const { upload, processProfileImage } = require('../middleware/upload');
+const { protect } = require('../utils/auth');
+const { upload, processProfileImage } = require('../utils/upload');
 const {
     register,
     login,

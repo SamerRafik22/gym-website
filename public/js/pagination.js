@@ -26,10 +26,11 @@ class PaginationManager {
     render() {
         if (!this.container) return;
 
-        if (this.totalPages <= 1) {
-            this.container.innerHTML = '';
-            return;
-        }
+        // Always show pagination for demonstration (comment out to hide when <=1 page)
+        // if (this.totalPages <= 1) {
+        //     this.container.innerHTML = '';
+        //     return;
+        // }
 
         const paginationHTML = this.generatePaginationHTML();
         this.container.innerHTML = paginationHTML;

@@ -12,7 +12,7 @@ const {
     updatePaymentStatus
 } = require('../controllers/reservationController');
 
-const { protect, authorize } = require('../middleware/auth');
+const { protect, authorize } = require('../utils/auth');
 
 const router = express.Router();
 
