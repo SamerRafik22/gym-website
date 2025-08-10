@@ -1,0 +1,5 @@
+[33mdc57fb1[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Refactor: Restructure project according to best practices
+[33m485ea0c[m Fix profile image persistence - add profileImage to getMe endpoint and refresh user data from server
+[33m6dd7d12[m Convert profile photo upload to modal overlay to completely prevent overlap issues
+[33mf5ffd6a[m Fix profile photo upload form positioning to prevent weather widget overlap
+[33m38e84a8[m Add profile photo upload functionality with image processing and validation

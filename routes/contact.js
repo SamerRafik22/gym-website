@@ -345,8 +345,11 @@ const getContactStats = async (req, res) => {
 };
 
 // Routes
+router.get('/', (req, res) => {
+    res.render('contact');
+});
 router.post('/', contactValidation, submitContact);
-router.get('/', protect, authorize('admin'), getContacts);
+router.get('/admin', protect, authorize('admin'), getContacts);
 router.get('/stats', protect, authorize('admin'), getContactStats);
 router.get('/:id', protect, authorize('admin'), getContact);
 router.put('/:id', protect, authorize('admin'), updateContact);

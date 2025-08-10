@@ -147,9 +147,7 @@ app.get('/services', (req, res) => {
     res.render('services');
 });
 
-app.get('/contact', (req, res) => {
-    res.render('contact');
-});
+// Contact route is handled by contactRoutes middleware
 
 app.get('/join', (req, res) => {
     res.render('join');
@@ -204,9 +202,7 @@ app.get('/about.html', (req, res) => {
     res.render('about');
 });
 
-app.get('/contact.html', (req, res) => {
-    res.render('contact');
-});
+// Contact route is handled by contactRoutes middleware
 
 app.get('/dashboard.html', protect, (req, res) => {
     res.render('dashboard');
